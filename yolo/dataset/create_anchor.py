@@ -82,5 +82,5 @@ class Anchor(object):
 
 if __name__ == '__main__':
     anchor = Anchor()
-    anchors = anchor.generate_anchor(annotations_dir='../data/chess_pieces/train.txt', k=9)
+    anchors = anchor.generate_anchor(annotations_dir='../data/chess_pieces/train.txt', k=32)
     print(anchors)

@@ -17,6 +17,7 @@ from model.yolo import Yolo
 from model.loss import YoloLoss
 from model.optimizer import Optimizer, LrScheduler
 from configs.config import params
+
 np.random.seed(1919)
 tf.random.set_seed(1949)
 
@@ -62,7 +63,7 @@ class Trainer(object):
                                     img_size=self.params['img_size'])
             self.optimizer = Optimizer('adam')()   
 
-    def train(self, train_dataset, valid_dataset=None, transfer='scratch'):
+    def train(self, train_dataset, valid_dataset=None, transfer='scratch', keras_model=None):
         """ train function
         :param train_dataset: train dataset built by tf.data
         :param valid_dataset: valid dataset build by td.data, optional
@@ -77,6 +78,8 @@ class Trainer(object):
             self.lr_scheduler = LrScheduler(self.total_steps, self.params, scheduler_method='cosine')
             # => tf.keras.Model
             self.model = self.model(self.params['img_size'])
+            if keras_model:
+                reconfg_train_from_keras_model(self, keras_model);
 
             ckpt = tf.train.Checkpoint(model=self.model, optimizer=self.optimizer)
             ckpt_manager = tf.train.CheckpointManager(ckpt, self.params['checkpoint_dir'], max_to_keep=5)
@@ -148,6 +151,19 @@ class Trainer(object):
         tf.saved_model.save(self.model, self.params['saved_model_dir'])
         print("pb model saved in {}".format(self.params['saved_model_dir']))
 
+def reconfg_train_from_keras_model(trainer, loaded_model):
+    loaded_model.load_weights('../weights/yolov5/variables/variables')
+    loading_counter = 0
+    layer_idx = 0
+    while layer_idx < len(loaded_model.layers):
+      each_layer = loaded_model.layers[layer_idx]
+      sync_layer = trainer.model.layers[layer_idx]
+      stored_weights = loaded_model.get_layer(each_layer.name).get_weights()
+      trainer.model.get_layer(sync_layer.name).set_weights(stored_weights)
+      loading_counter += 1
+      layer_idx += 1
+    print("loading_counter", loading_counter)
+    return
 
 if __name__ == '__main__':
     trainer = Trainer(params)

@@ -3,9 +3,12 @@
 **/.idea/*
 **/.pytest_cache/
 **/.DS_Store
+**/weights/*
 /reference/*
 /backup/*
 **/nohup.out
 **/temp.py
 /data/logs/*
 /data/*.zip
+/data/chess_pieces/*
+
