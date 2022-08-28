@@ -10,14 +10,14 @@ def init_params():
     params = {'train_annotations_dir': '../data/chess_pieces/train.txt',
               'valid_annotations_dir': '../data/chess_pieces/valid.txt',
               'class_name_dir': '../data/chess_pieces/train/_classes.txt',
-              'yaml_dir': 'configs/yolo-m-mish.yaml',
+              'yaml_dir': 'configs/yolo-s-mish.yaml',
               'log_dir': '../logs',
               'checkpoint_dir': '../weights',
               'saved_model_dir': '../weights/yolov5',
-              'n_epochs': 30, 'batch_size': 8,
-              'multi_gpus': False, 'init_learning_rate': 3e-4,
+              'n_epochs': 50, 'batch_size': 16,
+              'multi_gpus': False, 'init_learning_rate': 1e-3,
               'warmup_learning_rate': 1e-6, 'warmup_epochs': 1,
-              'img_size': 800, 'mosaic_data': False,
+              'img_size': 416, 'mosaic_data': False,
               'augment_data': True, 'anchor_assign_method': 'wh',
               'anchor_positive_augment': True,
               'label_smoothing': 0.02}
@@ -49,3 +49,13 @@ def datasets_from_params(params: dict, trainer: Trainer):
     valid_dataset = valid_data_loader(batch_size=params['batch_size'], anchor_label=True)
     valid_dataset.len = len(valid_data_reader)
     return train_dataset, valid_dataset
+
+def create_detect_opt():
+    opt = {}
+    opt['img_dir'] = '../data/chess_pieces/test/cfc306bf86176b92ffc1afbb98d7896f_jpg.rf.effd71a5dcd98ec0f24072af5f7c0a31.jpg'
+    opt['class_name_dir'] = '../data/chess_pieces/train/_classes.txt'
+    opt['model_dir'] = '../weights/yolov5'
+    opt['img_size'] = 416
+    opt['conf_threshold'] = 0.8
+    opt['iou_threshold'] = 0.3
+    return opt

@@ -16,7 +16,7 @@ from dataset import DataReader
 from dataset.image_utils import box_iou, xyxy2xywh, resize_back, resize_image
 from model.metrics import ap_per_class
 from model.post_process import batch_non_max_suppression
-
+from params_misc import init_params
 
 class TestDataReader(DataReader):
     def __init__(self, annotations_dir, image_target_size=640, transform=None, mosaic=False, augment=False):
@@ -104,6 +104,7 @@ class Evaluator(object):
 
 
 if __name__ == '__main__':
+    params = init_params()
     with open(params['yaml_dir']) as f:
         yaml_dict = yaml.load(f, Loader=yaml.FullLoader)
     anchors = np.array(yaml_dict['anchors'], np.float32).reshape(3, -1, 2)
