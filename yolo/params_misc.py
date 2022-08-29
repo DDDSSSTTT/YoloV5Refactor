@@ -16,7 +16,7 @@ def init_params():
               'saved_model_dir': '../weights/yolov5',
               'n_epochs': 100, 'batch_size': 4,
               'multi_gpus': False, 'init_learning_rate': 2e-4,
-              'warmup_learning_rate': 1e-6, 'warmup_epochs': 1,
+              'warmup_learning_rate': 1e-6, 'warmup_epochs': 0,
               'img_size': 416, 'mosaic_data': False,
               'augment_data': True, 'anchor_assign_method': 'wh',
               'anchor_positive_augment': True,
