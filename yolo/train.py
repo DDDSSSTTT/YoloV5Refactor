@@ -16,7 +16,6 @@ from dataset.load_data import DataLoader
 from model.yolo import Yolo
 from model.loss import YoloLoss
 from model.optimizer import Optimizer, LrScheduler
-from configs.config import params
 
 np.random.seed(1919)
 tf.random.set_seed(1949)
@@ -166,6 +165,8 @@ def reconfg_train_from_keras_model(trainer, loaded_model):
     return
 
 if __name__ == '__main__':
+    # Move this line here to enable colab running
+    from configs.config import params
     trainer = Trainer(params)
     DataReader = DataReader(params['train_annotations_dir'], img_size=params['img_size'], transforms=transforms,
                             mosaic=params['mosaic_data'], augment=params['augment_data'], filter_idx=None)

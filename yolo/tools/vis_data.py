@@ -24,8 +24,8 @@ def draw_box(image, label, classes_map=None):
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
-    bbox_thick = int(0.6 * (image_h + image_w) / 600)   
-    font_scale = 0.5
+    bbox_thick = int(0.6 * (image_h + image_w) / 200)
+    font_scale = 0.75
     score_thresh = 0.5
 
     for i in range(label.shape[0]):
@@ -38,7 +38,7 @@ def draw_box(image, label, classes_map=None):
         bbox_color = colors[class_ind%len(colors)]
         if label.shape[-1] == 6:
             prime_score = round(label[i, -2], 2)
-            score = ': ' + str(prime_score)
+            score = str(prime_score)
         else:
             score = ''
 
@@ -53,8 +53,8 @@ def draw_box(image, label, classes_map=None):
             else:
                 class_ind = str(class_ind)
 
-            bbox_text = '%s %s' % (class_ind, score)
-            t_size = cv2.getTextSize(bbox_text, 0, font_scale, thickness=bbox_thick//2)[0]
+            bbox_text = '%s \n %s' % (class_ind + ":", score)
+            t_size = cv2.getTextSize(bbox_text, 0, font_scale, thickness=bbox_thick//4)[0]
             cv2.rectangle(image, x1y1, (x1y1[0] + t_size[0], x1y1[1] - t_size[1] - 3), bbox_color, -1)  # filled
             cv2.putText(image, bbox_text, (x1y1[0], x1y1[1]-2), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)
 
