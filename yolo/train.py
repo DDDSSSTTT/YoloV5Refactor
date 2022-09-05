@@ -151,14 +151,18 @@ class Trainer(object):
         print("pb model saved in {}".format(self.params['saved_model_dir']))
 
 def reconfg_train_from_keras_model(trainer, loaded_model):
+    #Note: if you're using models other than yolo-s-mish.yaml, you should change the code here
     loaded_model.load_weights('../weights/yolov5/variables/variables')
     loading_counter = 0
     layer_idx = 0
-    while layer_idx < len(loaded_model.layers):
+    while layer_idx < len(loaded_model.layers) and layer_idx < 11:
       each_layer = loaded_model.layers[layer_idx]
       sync_layer = trainer.model.layers[layer_idx]
       stored_weights = loaded_model.get_layer(each_layer.name).get_weights()
-      trainer.model.get_layer(sync_layer.name).set_weights(stored_weights)
+      target_weights = trainer.model.get_layer(sync_layer.name).get_weights()
+      if np.shape(stored_weights) == np.shape(target_weights):
+          trainer.model.get_layer(sync_layer.name).set_weights(stored_weights)
+          trainer.model.get_layer(sync_layer.name).trainable = False
       loading_counter += 1
       layer_idx += 1
     print("loading_counter", loading_counter)
