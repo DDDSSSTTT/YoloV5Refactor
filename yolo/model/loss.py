@@ -20,7 +20,7 @@ class YoloLoss(object):
 
     def __call__(self, y_true, y_pred):
         iou_loss_all = obj_loss_all = class_loss_all = 0
-        balance = [4.0, 1.0, 1.0] if len(y_pred) == 3 else [4.0, 1.0, 0.4, 0.1]  # P3-5 or P3-6
+        balance = [1.0, 1.0, 1.0] if len(y_pred) == 3 else [4.0, 1.0, 0.4, 0.1]  # P3-5 or P3-6
 
         for i, (pred, true) in enumerate(zip(y_pred, y_true)):
             # preprocess, true: batch_size * grid * grid * 3 * 6, pred: batch_size * grid * grid * clss+5

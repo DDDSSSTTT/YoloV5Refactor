@@ -67,7 +67,10 @@ if __name__ == '__main__':
     # parser.add_argument('--iou_threshold', type=float, default=0.3, help='nms iou threshold')
     # opt = parser.parse_args()
     # test_image_demo(opt.img_dir, opt.model_dir, opt.img_size, opt.class_name_dir, opt.conf_threshold, opt.iou_threshold)
-
+    '''
+    Note: function "create_detect_opt" imported from "params_misc" is open to re-configuration.
+    You can change the content of "opt[img_dir]" to select another photo for detection.
+    '''
     opt = create_detect_opt()
     test_image_demo(opt['img_dir'], opt['model_dir'], opt['img_size'],
                     opt['class_name_dir'], opt['conf_threshold'],opt['iou_threshold'])
