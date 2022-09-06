@@ -32,6 +32,8 @@ def image_demo(img, model, img_size=640, class_names=None, conf_threshold=0.4, i
     bboxes = bboxes[0].numpy()  # batch is 1 for detect
 
     bboxes = resize_back(bboxes, target_sizes=img_size, original_shape=original_shape)  # adjust box to original size
+    for each in bboxes:
+        print(each[:5], class_names[int(each[5])])
     if bboxes.any():   
         image = draw_box(img, np.array(bboxes), class_names)
         cv2.imwrite('./demo.jpg', cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
@@ -72,6 +74,12 @@ if __name__ == '__main__':
     You can change the content of "opt[img_dir]" to select another photo for detection.
     '''
     opt = create_detect_opt()
+    opt['img_dir'] = '../data/jpgs/3916261642_0a504acd60_o.jpg'
+    opt['model_dir'] = '../weights/test_yolov5'
+    opt['img_size'] = 640
+    opt['class_name_dir'] = '../data/salad/salad_cls.txt'
+    opt['conf_threshold'] = 0.2
+    opt['iou_threshold'] = 0.1
     test_image_demo(opt['img_dir'], opt['model_dir'], opt['img_size'],
                     opt['class_name_dir'], opt['conf_threshold'],opt['iou_threshold'])
 

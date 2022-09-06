@@ -49,7 +49,7 @@ def draw_box(image, label, classes_map=None):
         else:
             class_ind = str(class_ind)
 
-        bbox_text = '%s %.3f' % (class_ind + ":", score)
+        bbox_text = '%s %s' % (class_ind + ":", score)
         t_size = cv2.getTextSize(bbox_text, 0, font_scale, thickness=bbox_thick//4)[0]
         cv2.rectangle(image, x1y1, (x1y1[0] + t_size[0], x1y1[1] - t_size[1] - 3), bbox_color, -1)  # filled
         cv2.putText(image, bbox_text, (x1y1[0], x1y1[1]-2), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)

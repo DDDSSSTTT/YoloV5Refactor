@@ -10,5 +10,8 @@
 **/temp.py
 /data/logs/*
 /data/*.zip
-/data/chess_pieces/*
+**/data/chess_pieces/*
+**/data/jpgs/*
+**/data/salad/*
+**/tools/demo.jpg
 
