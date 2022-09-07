@@ -155,7 +155,7 @@ def reconfg_train_from_keras_model(trainer, loaded_model):
     loaded_model.load_weights('../weights/yolov5/variables/variables')
     loading_counter = 0
     layer_idx = 0
-    while layer_idx < len(loaded_model.layers) and layer_idx < 11:
+    while layer_idx < len(loaded_model.layers) and layer_idx < 10:
       each_layer = loaded_model.layers[layer_idx]
       sync_layer = trainer.model.layers[layer_idx]
       stored_weights = loaded_model.get_layer(each_layer.name).get_weights()
@@ -164,7 +164,7 @@ def reconfg_train_from_keras_model(trainer, loaded_model):
           trainer.model.get_layer(sync_layer.name).set_weights(stored_weights)
           trainer.model.get_layer(sync_layer.name).trainable = False
       loading_counter += 1
-      layer_idx += 1
+      layer_idx += 2
     print("loading_counter", loading_counter)
     return
 
