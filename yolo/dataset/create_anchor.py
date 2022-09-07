@@ -48,7 +48,7 @@ class Anchor(object):
         for i, annotation in enumerate(annotations):
             line = annotation.split()
             bboxes = np.array([list(map(float, box.split(','))) for box in line[1:]])
-            assert bboxes.shape[1] == 5, "make sure the labeled objective has xmin,ymin,xmax,ymax,class"
+            assert bboxes.shape[1] == 5, "make sure the labeled objective has xmin, ymin, xmax, ymax, class"
             bbox_wh = bboxes[:, 2:4] - bboxes[:, 0:2]  # n_box * 2
             result.append(bbox_wh)
         result = np.concatenate(result, axis=0)
@@ -82,5 +82,5 @@ class Anchor(object):
 
 if __name__ == '__main__':
     anchor = Anchor()
-    anchors = anchor.generate_anchor(annotations_dir='../data/chess_pieces/train.txt', k=9)
+    anchors = anchor.generate_anchor(annotations_dir='../data/salad/salad_train.txt', k=9)
     print(anchors)

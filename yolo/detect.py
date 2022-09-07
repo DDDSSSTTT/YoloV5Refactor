@@ -33,6 +33,8 @@ def image_demo(img, model, img_size=640, class_names=None, conf_threshold=0.4, i
 
     bboxes = resize_back(bboxes, target_sizes=img_size, original_shape=original_shape)  # adjust box to original size
     for each in bboxes:
+        for i in range(len(each)-2):
+            each[i] = max(0.05*img_size, min(0.95*img_size, each[i])) # cut off
         print(each[:5], class_names[int(each[5])])
     if bboxes.any():   
         image = draw_box(img, np.array(bboxes), class_names)
