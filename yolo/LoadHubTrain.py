@@ -4,7 +4,7 @@ from params_misc import init_params, datasets_from_params
 import train
 
 #Create Trainer From Hub Model
-hub_model = hub.resolve("../weights/yolov5")
+hub_model = hub.resolve("../weights/test_yolov5")
 keras_model = tf.keras.models.load_model(hub_model)
 keras_model.compile(optimizer="Adam", loss="mse", metrics=["mae"])
 
